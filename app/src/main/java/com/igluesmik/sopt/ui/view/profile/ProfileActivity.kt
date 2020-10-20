@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.SoptApplication
 import com.igluesmik.sopt.model.Profile
 import com.igluesmik.sopt.ui.view.adapter.ProfileAdapter
+import com.igluesmik.sopt.ui.view.login.SignInActivity
+import com.igluesmik.sopt.ui.view.login.SignUpActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
@@ -56,6 +59,11 @@ class ProfileActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        btn_logout.setOnClickListener {
+            SoptApplication.preferences.setBoolean("auto_login",false)
+            startSignInActivity()
+            finish()
+        }
     }
 
     fun initData() {
@@ -68,5 +76,9 @@ class ProfileActivity : AppCompatActivity() {
         )
         profileAdapter.data = profileList
         profileAdapter.notifyDataSetChanged()
+    }
+
+    fun startSignInActivity() {
+        startActivity(Intent(this, SignInActivity::class.java));
     }
 }

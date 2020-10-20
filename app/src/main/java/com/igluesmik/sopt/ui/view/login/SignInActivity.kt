@@ -3,7 +3,9 @@ package com.igluesmik.sopt.ui.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.SoptApplication
 import com.igluesmik.sopt.ui.view.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -16,6 +18,14 @@ class SignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_in)
 
         initView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(SoptApplication.preferences.getBoolean("auto_login", false)){
+            startProfileActivity()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -34,7 +44,18 @@ class SignInActivity : AppCompatActivity() {
             startSignUpActivity()
         }
         btn_login.setOnClickListener {
-            startProfileActivity()
+            if(et_id.text.isNotEmpty() && et_password.text.isNotEmpty()){
+                Toast.makeText(this,"로그인 완료!", Toast.LENGTH_SHORT).show()
+
+                SoptApplication.preferences.setBoolean("auto_login",true)
+                SoptApplication.preferences.setString("id",et_id.text.toString())
+                SoptApplication.preferences.setString("password",et_password.text.toString())
+
+                startProfileActivity()
+            }
+            else {
+                Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
