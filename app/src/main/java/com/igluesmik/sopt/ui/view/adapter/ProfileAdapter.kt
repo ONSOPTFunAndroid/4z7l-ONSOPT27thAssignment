@@ -13,6 +13,14 @@ import kotlinx.android.synthetic.main.item_profile.view.*
 
 class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
 
+    val linearView = R.layout.item_profile
+    val gridView = R.layout.item_profile_grid
+
+    var itemViewType = linearView
+        set(value) {
+            field = if(value==1) linearView else gridView
+        }
+
     var data = mutableListOf<Profile>()
         set(value) {
             field = value
@@ -40,7 +48,7 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_profile, parent, false)
+        val view = LayoutInflater.from(context).inflate(itemViewType, parent, false)
         return ViewHolder(view)
     }
 

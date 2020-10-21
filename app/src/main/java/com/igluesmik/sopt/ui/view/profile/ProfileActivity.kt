@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.SoptApplication
@@ -30,8 +31,15 @@ class ProfileActivity : AppCompatActivity() {
 
     fun initView() {
         recyclerView.apply {
+            //LinearLayout
+            //profileAdapter.itemViewType = 1
+            //layoutManager = LinearLayoutManager(this@ProfileActivity)
+
+            //gridlayout
+            profileAdapter.itemViewType = 2
+            layoutManager = GridLayoutManager(this@ProfileActivity,2)
+
             adapter = profileAdapter
-            layoutManager = LinearLayoutManager(this@ProfileActivity)
         }
     }
 

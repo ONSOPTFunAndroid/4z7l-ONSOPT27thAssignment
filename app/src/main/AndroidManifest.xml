@@ -12,10 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:windowSoftInputMode="adjustPan"
-        android:usesCleartextTraffic="true">
-
-        <activity android:name=".ui.view.profile.DetailWebActivity"></activity>
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustPan">
+        <activity android:name=".ui.view.profile.DetailWebActivity" />
         <activity android:name=".ui.view.profile.DetailActivity" />
         <activity android:name=".ui.view.profile.ProfileActivity" />
         <activity android:name=".ui.view.login.SignUpActivity" />
