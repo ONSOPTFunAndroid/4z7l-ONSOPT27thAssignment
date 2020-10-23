@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.SoptApplication
 import com.igluesmik.sopt.model.Profile
 import com.igluesmik.sopt.ui.view.adapter.ProfileAdapter
+import com.igluesmik.sopt.ui.view.itemtouch.ItemTouchHelperCallback
 import com.igluesmik.sopt.ui.view.login.SignInActivity
 import com.igluesmik.sopt.ui.view.login.SignUpActivity
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -19,6 +21,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var profileList : MutableList<Profile>
 
     private val profileAdapter = ProfileAdapter(this)
+    private val itemTouchHelperCallback = ItemTouchHelperCallback(profileAdapter)
+    private val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +34,21 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun initView() {
+
         recyclerView.apply {
             //LinearLayout
-            //profileAdapter.itemViewType = 1
-            //layoutManager = LinearLayoutManager(this@ProfileActivity)
+            profileAdapter.itemViewType = 1
+            layoutManager = LinearLayoutManager(this@ProfileActivity)
 
             //gridlayout
-            profileAdapter.itemViewType = 2
-            layoutManager = GridLayoutManager(this@ProfileActivity,2)
+//            profileAdapter.itemViewType = 2
+//            layoutManager = GridLayoutManager(this@ProfileActivity,2)
 
+            setHasFixedSize(true)
             adapter = profileAdapter
         }
+
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     fun initEvent() {
