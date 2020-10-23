@@ -33,25 +33,19 @@ class ProfileActivity : AppCompatActivity() {
         initData()
     }
 
-    fun initView() {
+    private fun initView() {
 
         recyclerView.apply {
-            //LinearLayout
             profileAdapter.itemViewType = 1
             layoutManager = LinearLayoutManager(this@ProfileActivity)
-
-            //gridlayout
-//            profileAdapter.itemViewType = 2
-//            layoutManager = GridLayoutManager(this@ProfileActivity,2)
-
-            setHasFixedSize(true)
             adapter = profileAdapter
+            setHasFixedSize(true)
         }
 
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    fun initEvent() {
+    private fun initEvent() {
         profileAdapter.onItemClickListener = {
             var bundle = Bundle()
             if(it.isAddress){
@@ -80,9 +74,23 @@ class ProfileActivity : AppCompatActivity() {
             startSignInActivity()
             finish()
         }
+        btn_linear.setOnClickListener {
+            recyclerView.apply {
+                profileAdapter.itemViewType = 1
+                layoutManager = LinearLayoutManager(this@ProfileActivity)
+                adapter = profileAdapter
+            }
+        }
+        btn_grid.setOnClickListener {
+            recyclerView.apply {
+                profileAdapter.itemViewType = 2
+                layoutManager = GridLayoutManager(this@ProfileActivity,2)
+                adapter = profileAdapter
+            }
+        }
     }
 
-    fun initData() {
+    private fun initData() {
         profileList = mutableListOf(
             Profile("이름","김슬기", R.drawable.ic_smile, false),
             Profile("나이","23", R.drawable.ic_smile, false),
