@@ -15,9 +15,9 @@
 
 
 
-|  필수 과제, 성장 과제1  |        성장 과제2         |
-| :---------------------: | :-----------------------: |
-| ![image](images/1w.gif) | ![image](images/1w_2.gif) |
+|   필수 과제, 성장 과제1   |        성장 과제2         |
+| :-----------------------: | :-----------------------: |
+| ![image](images/1w_1.gif) | ![image](images/1w_2.gif) |
 
 
 
@@ -39,16 +39,20 @@
 
 
 __SignUpActivity.kt__
+
+
+
 - 회원가입 버튼 클릭 시 세 개의 Edittext가 채워져있는지 확인
 ```kotlin
-btn_register.setOnClickListener {  
-  if(et_id.text.isNotEmpty() && et_name.text.isNotEmpty() && et_password.text.isNotEmpty() ) {  
-        //회원가입 완료
-    }  
-    else {  
-        //회원가입 실패
-    }  
-}
+private fun signUp() {
+        ...
+        if(id.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty() ) {
+            //회원가입 완료
+        }
+        else {
+            //회원가입 실패
+        }
+    }
 ```
 
 
@@ -68,23 +72,26 @@ btn_register.setOnClickListener {
 
 
 __SignInActivity.kt__
+
+
+
 - 회원가입 버튼 클릭시 `startActivityForResult`로 __SignUpActivity__ 실행
 
 ```kotlin
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {  
-    super.onActivityResult(requestCode, resultCode, data)  
-  
-    if(requestCode==SIGN_UP_REQUEST_CODE){  
-        if(resultCode== RESULT_OK){  
-            et_id.setText(data?.getStringExtra("id"))  
-            et_password.setText(data?.getStringExtra("password"))  
-        }  
-    }  
-}  
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if(requestCode==SIGN_UP_REQUEST_CODE){
+        if(resultCode== RESULT_OK){
+            viewDataBinding.etId.setText(data?.getStringExtra("id"))
+            viewDataBinding.etPassword.setText(data?.getStringExtra("password"))
+        }
+    }
+} 
   
 fun initView() {  
-    btn_register.setOnClickListener {  
-		startSignUpActivity()  
+    viewDataBinding.btnRegister.setOnClickListener {
+            startSignUpActivity()
     }
 }  
   
@@ -96,6 +103,8 @@ fun startSignUpActivity() {
 <br>
 
 __SignUpActivity.kt__
+
+
 
 - 회원가입 완료 시 `Intent`로 값 전달
 
@@ -132,22 +141,22 @@ __PreferenceUtil.kt__
 
 __SignInActivity.kt__
 
+
+
 ```kotlin
-//로그인 버튼 클릭 시 SharedPreference 저장
-btn_login.setOnClickListener {
-            if(et_id.text.isNotEmpty() && et_password.text.isNotEmpty()){
-                ...
+//로그인 성공 시 SharedPreference 저장
+private fun signIn() {
+        ...
+        if(id.isNotEmpty() && password.isNotEmpty()){
+            ...
+            SoptApplication.preferences.setBoolean("auto_login",true)
+            SoptApplication.preferences.setString("id",id.toString())
+            SoptApplication.preferences.setString("password",password.toString())
 
-                SoptApplication.preferences.setBoolean("auto_login",true)
-                SoptApplication.preferences.setString("id",et_id.text.toString())
-                SoptApplication.preferences.setString("password",et_password.text.toString())
-
-                ...
-            }
-            else {
-                ...
-            }
+            startProfileActivity()
         }
+        ...
+    }
 ```
 
 ```kotlin
@@ -172,9 +181,9 @@ override fun onStart() {
 
 
 
-|        필수 과제        |        성장 과제1         |
-| :---------------------: | :-----------------------: |
-| ![image](images/2w.gif) | ![image](images/2w_2.gif) |
+|  필수 과제, 성장 과제 1   |        성장 과제2         |
+| :-----------------------: | :-----------------------: |
+| ![image](images/2w_1.gif) | ![image](images/2w_2.gif) |
 
 
 
@@ -188,12 +197,6 @@ override fun onStart() {
 
 
 
-<br>
-
-> #### 주요 코드
-
-
-
 1. Activity 에 RecyclerView 추가
 2. item xml 추가
 3. RecyclerView.Adapter 생성
@@ -201,34 +204,72 @@ override fun onStart() {
 
 
 
+<br>
+
+
+## 성장 과제 1
+
+- GridLayout 사용
+
+
+
+1. GridLayout으로 바꿔주는 버튼 클릭 시 recyclerview의 adapter와 layoutmanager 다시 세팅
+
+
+
+<br>
+
+## 성장 과제 2
+
+- RecyclerView Item이동 삭제 구현
+
+
+
+1. `ItemTouchHelperListener` 생성
+2. `ItemTouchHelperCallback` 생성
+3. RecyclerView.Adapter에 `ItemTouchHelperListener`  구현 
+4. `ItemTouchHelper`에 `ItemTouchHelperCallback` 등록
+
+
+
+<br>
+
+> #### 주요 코드
+
+
+
 __ProfileActivity.kt__
 
+
+
 ```kotlin
-fun initView() {
-    //initiate recyclerview
-    recyclerView.apply {
-            profileAdapter.itemViewType = 1
-            layoutManager = LinearLayoutManager(this@ProfileActivity)
-    		adapter = profileAdapter
-	}
+
+private fun initView() {
+    //item touch helper 등록
+    val itemTouchHelperCallback = ItemTouchHelperCallback(profileAdapter)
+    val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+
+    viewDataBinding.recyclerView.apply {
+        layoutManager = linearLayoutManager
+        adapter = profileAdapter
+        setHasFixedSize(true)
+    }
+
+    itemTouchHelper.attachToRecyclerView(viewDataBinding.recyclerView)
 }
-fun initView() {
-    //setting click listener
-    profileAdapter.onItemClickListener = {
-        ...
+
+private fun initEvent() {
+    viewDataBinding.btnLinear.setOnClickListener {
+        setRecyclerViewLinear()
+    }
+    viewDataBinding.btnGrid.setOnClickListener {
+        setRecyclerViewGrid()
     }
 }
-fun initData() {
-    //adapt data
-    profileList = mutableListOf(
-        Profile("이름","김슬기", R.drawable.ic_smile, false),
-        Profile("나이","23", R.drawable.ic_smile, false),
-        Profile("파트","안드로이드", R.drawable.ic_smile, false),
-        Profile("Github","https://www.github.com/4z7l", R.drawable.ic_smile, true),
-        Profile("Blog","https://4z7l.github.io", R.drawable.ic_smile, true)
-    )
-    profileAdapter.data = profileList
-    profileAdapter.notifyDataSetChanged()
+
+private fun initData() {
+    profileList = mutableListOf(...)
+    profileAdapter.setData(profileList)
 }
 ```
 
@@ -236,32 +277,42 @@ fun initData() {
 
 __ProfileAdapter.kt__
 
+
+
 ```kotlin
-class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
+class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>(), ItemTouchHelperListener {
 
-    val linearView = R.layout.item_profile
-    val gridView = R.layout.item_profile_grid
+    private val data = mutableListOf<Profile>()
 
-    var itemViewType = linearView
-        set(value) {
-            field = if(value==1) linearView else gridView
-        }
+    private val linearItemView = R.layout.item_profile
+    private val gridItemView = R.layout.item_profile_grid
 
-    var data = mutableListOf<Profile>()
-        set(value) {
-            field = value
-        }
+    private var itemViewType : Int = linearItemView
 
-    var onItemClickListener : ((Profile) -> Unit) ?= null
-        set(value) {
-            field = value
-        }
+    private var onItemClickListener : ((Profile) -> Unit) ?= null
 
+    fun setData(data : MutableList<Profile>) {
+        this.data.clear()
+        this.data.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener : (Profile) -> Unit) {
+        this.onItemClickListener = listener
+    }
+
+    fun setGridItemViewType(){
+        this.itemViewType = gridItemView
+    }
+
+    fun setLinearItemViewType(){
+        this.itemViewType = linearItemView
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val title : TextView = itemView.title
-        private val subtitle : TextView = itemView.subtitle
-        private val image : ImageView = itemView.image
+        private val title : TextView = itemView.findViewById(R.id.title)
+        private val subtitle : TextView = itemView.findViewById(R.id.subtitle)
+        private val image : ImageView = itemView.findViewById(R.id.image)
 
         fun onBind(data : Profile) {
             title.text = data.title
@@ -271,7 +322,6 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(data)
             }
-
         }
     }
 
@@ -285,38 +335,34 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
     }
 
     override fun getItemCount(): Int = data.size
+
+    override fun onItemMoved(from: Int, to: Int){
+        Collections.swap(data, from, to)
+        notifyItemMoved(from, to)
+    }
+
+    override fun onItemSwiped(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
 }
 ```
 
 
 
-
-
 <br>
 
 
-## 성장 과제 1
 
-- GridLayout 사용
-
+__ItemTouchHelperListener.kt__
 
 
-<br>
-
-> #### 주요 코드
-
-
-
-__ProfileActivity.kt__
 
 ```kotlin
-fun initView() {
-    //initiate recyclerview
-    recyclerView.apply {
-            profileAdapter.itemViewType = 2
-            layoutManager = GridLayoutManager(this@ProfileActivity,2)
-    		adapter = profileAdapter
-	}
+interface ItemTouchHelperListener {
+    fun onItemMoved(from : Int, to : Int)
+    fun onItemSwiped(position : Int)
 }
 ```
 
@@ -326,17 +372,32 @@ fun initView() {
 
 <br>
 
-## 성장 과제 2
-
-- RecyclerView Item이동 삭제 구현
+__ItemTouchHelperCallback.kt__
 
 
 
+```kotlin
+class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : ItemTouchHelper.Callback(){
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
+        ...
+    }
 
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ): Boolean {
+        ...
+    }
 
-<br>
-
-> #### 주요 코드
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        ...
+    }
+}
+```
 
 
 
