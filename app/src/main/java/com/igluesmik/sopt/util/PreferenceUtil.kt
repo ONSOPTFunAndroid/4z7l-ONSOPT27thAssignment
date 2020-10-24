@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class PreferenceUtil(context: Context) {
+
     private val preference : SharedPreferences
-    = context.getSharedPreferences("Sopt",Context.MODE_PRIVATE)
+            = context.getSharedPreferences("SOPT",Context.MODE_PRIVATE)
 
     fun getString(key : String, value : String) : String {
         return preference.getString(key, value).toString()

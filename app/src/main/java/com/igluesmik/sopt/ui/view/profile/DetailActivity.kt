@@ -1,35 +1,44 @@
 package com.igluesmik.sopt.ui.view.profile
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.igluesmik.sopt.R
-import kotlinx.android.synthetic.main.activity_detail.*
+import com.igluesmik.sopt.databinding.ActivityDetailBinding
+import com.igluesmik.sopt.ui.view.base.BaseActivity
+import com.igluesmik.sopt.ui.view.base.BaseViewModel
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity<ActivityDetailBinding, BaseViewModel>() {
+
+    override val layoutResourceId: Int = R.layout.activity_detail
+    override val viewModel: BaseViewModel = BaseViewModel()
 
     private var title : String ?= null
     private var subtitle : String ?= null
     private var resourceId : Int ?= null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
-
+    override fun initStartView() {
         getProfileBundle()
         initView()
     }
 
-    fun getProfileBundle() {
-        val bundle = getIntent().getBundleExtra("bundle").also {
+    override fun initBeforeBinding() {
+
+    }
+
+    override fun initAfterBinding() {
+
+    }
+
+    private fun getProfileBundle() {
+        intent.getBundleExtra("bundle").also {
             title = it?.getString("title")
             subtitle = it?.getString("subtitle")
             resourceId = it?.getInt("image")
         }
     }
 
-    fun initView() {
-        txt_title.text = title
-        txt_subtitle.text = subtitle
-        image.setImageResource(resourceId ?: R.drawable.ic_error)
+    private fun initView() {
+        viewDataBinding.txtTitle.text = title
+        viewDataBinding.txtSubtitle.text = subtitle
+        viewDataBinding.image.setImageResource(resourceId ?: R.drawable.ic_error)
     }
+
 }

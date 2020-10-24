@@ -3,28 +3,40 @@ package com.igluesmik.sopt.ui.view.profile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.databinding.ActivityDetailWebBinding
+import com.igluesmik.sopt.ui.view.base.BaseActivity
+import com.igluesmik.sopt.ui.view.base.BaseViewModel
 import kotlinx.android.synthetic.main.activity_detail_web.*
 
-class DetailWebActivity : AppCompatActivity() {
+class DetailWebActivity : BaseActivity<ActivityDetailWebBinding, BaseViewModel>() {
+
+    override val layoutResourceId: Int = R.layout.activity_detail_web
+    override val viewModel: BaseViewModel = BaseViewModel()
 
     private var url : String ?= null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_web)
-
+    override fun initStartView() {
         getProfileBundle()
         initView()
     }
 
-    fun getProfileBundle() {
-        val bundle = getIntent().getBundleExtra("bundle").also {
+    override fun initBeforeBinding() {
+
+    }
+
+    override fun initAfterBinding() {
+
+    }
+
+    private fun getProfileBundle() {
+        intent.getBundleExtra("bundle").also {
             url = it?.getString("url")
         }
     }
 
-    fun initView() {
+    private fun initView() {
         if(!url.isNullOrEmpty())
-            webView.loadUrl(url!!)
+            viewDataBinding.webView.loadUrl(url!!)
     }
+
 }

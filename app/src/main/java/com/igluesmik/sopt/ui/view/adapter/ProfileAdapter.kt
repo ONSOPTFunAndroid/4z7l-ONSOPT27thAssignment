@@ -6,8 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.databinding.ItemProfileBinding
+import com.igluesmik.sopt.databinding.ItemProfileGridBinding
 import com.igluesmik.sopt.model.Profile
 import com.igluesmik.sopt.ui.view.itemtouch.ItemTouchHelperListener
 import kotlinx.android.synthetic.main.item_profile.view.*
@@ -15,29 +20,37 @@ import java.util.*
 
 class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>(), ItemTouchHelperListener {
 
-    val linearView = R.layout.item_profile
-    val gridView = R.layout.item_profile_grid
+    private val data = mutableListOf<Profile>()
 
-    var itemViewType = linearView
-        set(value) {
-            field = if(value==1) linearView else gridView
-        }
+    private val linearItemView = R.layout.item_profile
+    private val gridItemView = R.layout.item_profile_grid
 
-    var data = mutableListOf<Profile>()
-        set(value) {
-            field = value
-        }
+    private var itemViewType : Int = linearItemView
 
-    var onItemClickListener : ((Profile) -> Unit) ?= null
-        set(value) {
-            field = value
-        }
+    private var onItemClickListener : ((Profile) -> Unit) ?= null
 
+    fun setData(data : MutableList<Profile>) {
+        this.data.clear()
+        this.data.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener : (Profile) -> Unit) {
+        this.onItemClickListener = listener
+    }
+
+    fun setGridItemViewType(){
+        this.itemViewType = gridItemView
+    }
+
+    fun setLinearItemViewType(){
+        this.itemViewType = linearItemView
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val title : TextView = itemView.title
-        private val subtitle : TextView = itemView.subtitle
-        private val image : ImageView = itemView.image
+        private val title : TextView = itemView.findViewById(R.id.title)
+        private val subtitle : TextView = itemView.findViewById(R.id.subtitle)
+        private val image : ImageView = itemView.findViewById(R.id.image)
 
         fun onBind(data : Profile) {
             title.text = data.title
@@ -47,7 +60,6 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(data)
             }
-
         }
     }
 
