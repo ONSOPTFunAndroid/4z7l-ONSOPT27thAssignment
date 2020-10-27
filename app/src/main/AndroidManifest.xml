@@ -14,10 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan">
-
-        <activity android:name=".ui.view.profile.DetailWebActivity" />
-        <activity android:name=".ui.view.profile.DetailActivity" />
-        <activity android:name=".ui.view.profile.ProfileActivity" />
+        <activity android:name=".ui.view.MainActivity"></activity>
         <activity android:name=".ui.view.login.SignUpActivity" />
         <activity android:name=".ui.view.login.SignInActivity">
             <intent-filter>

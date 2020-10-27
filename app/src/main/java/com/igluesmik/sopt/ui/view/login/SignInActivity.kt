@@ -1,17 +1,13 @@
 package com.igluesmik.sopt.ui.view.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.widget.Toast
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.SoptApplication
 import com.igluesmik.sopt.databinding.ActivitySignInBinding
+import com.igluesmik.sopt.ui.view.MainActivity
 import com.igluesmik.sopt.ui.view.base.BaseActivity
-import com.igluesmik.sopt.ui.view.base.BaseViewModel
-import com.igluesmik.sopt.ui.view.profile.ProfileActivity
 import com.igluesmik.sopt.ui.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
 
@@ -38,7 +34,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
         super.onStart()
 
         if(SoptApplication.preferences.getBoolean("auto_login", false)){
-            startProfileActivity()
+            startMainActivity()
         }
     }
 
@@ -73,7 +69,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
             SoptApplication.preferences.setString("id",id.toString())
             SoptApplication.preferences.setString("password",password.toString())
 
-            startProfileActivity()
+            startMainActivity()
         }
         else {
             Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()
@@ -84,8 +80,8 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
         startActivityForResult(Intent(this, SignUpActivity::class.java), SIGN_UP_REQUEST_CODE);
     }
 
-    private fun startProfileActivity() {
-        startActivity(Intent(this, ProfileActivity::class.java))
+    private fun startMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

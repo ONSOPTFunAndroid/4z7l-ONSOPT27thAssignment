@@ -1,33 +1,28 @@
 package com.igluesmik.sopt.ui.view.profile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.SoptApplication
-import com.igluesmik.sopt.databinding.ActivityProfileBinding
+import com.igluesmik.sopt.databinding.FragmentProfileBinding
 import com.igluesmik.sopt.model.Profile
 import com.igluesmik.sopt.ui.view.adapter.ProfileAdapter
-import com.igluesmik.sopt.ui.view.base.BaseActivity
-import com.igluesmik.sopt.ui.view.base.BaseViewModel
+import com.igluesmik.sopt.ui.view.base.BaseFragment
 import com.igluesmik.sopt.ui.view.itemtouch.ItemTouchHelperCallback
 import com.igluesmik.sopt.ui.view.login.SignInActivity
-import com.igluesmik.sopt.ui.view.login.SignUpActivity
 import com.igluesmik.sopt.ui.viewmodel.ProfileViewModel
-import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : BaseActivity<ActivityProfileBinding, ProfileViewModel>() {
 
-    override val layoutResourceId: Int = R.layout.activity_profile
-    override val viewModel: ProfileViewModel = ProfileViewModel()
+class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
+    override val layoutResourceId: Int
+        get() = R.layout.fragment_profile
+    override val viewModel : ProfileViewModel = ProfileViewModel()
 
-    private val profileAdapter = ProfileAdapter(this)
-    private val linearLayoutManager = LinearLayoutManager(this)
-    private val gridLayoutManager = GridLayoutManager(this,2)
+    private val profileAdapter : ProfileAdapter by lazy { ProfileAdapter(requireContext()) }
+
 
     private lateinit var profileList : MutableList<Profile>
 
@@ -36,7 +31,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding, ProfileViewModel>()
         initEvent()
     }
 
-    override fun initBeforeBinding() {
+    override fun initDataBinding() {
         initData()
     }
 
@@ -49,7 +44,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding, ProfileViewModel>()
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
 
         viewDataBinding.recyclerView.apply {
-            layoutManager = linearLayoutManager
+            layoutManager = LinearLayoutManager(context)
             adapter = profileAdapter
             setHasFixedSize(true)
         }
@@ -59,7 +54,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding, ProfileViewModel>()
 
     private fun initEvent() {
         profileAdapter.setOnItemClickListener{
-            startDetailActivity(it)
+            startDetailFragment(it)
         }
         viewDataBinding.btnLogout.setOnClickListener {
             logout()
@@ -74,56 +69,51 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding, ProfileViewModel>()
 
     private fun initData() {
         profileList = mutableListOf(
-            Profile("이름","김슬기", R.drawable.ic_smile, false),
-            Profile("나이","23", R.drawable.ic_smile, false),
-            Profile("파트","안드로이드", R.drawable.ic_smile, false),
-            Profile("Github","https://www.github.com/4z7l", R.drawable.ic_smile, true),
-            Profile("Blog","https://4z7l.github.io", R.drawable.ic_smile, true)
+            Profile("이름", "김슬기", R.drawable.ic_smile, false),
+            Profile("나이", "23", R.drawable.ic_smile, false),
+            Profile("파트", "안드로이드", R.drawable.ic_smile, false),
+            Profile("Github", "https://www.github.com/4z7l", R.drawable.ic_smile, true),
+            Profile("Blog", "https://4z7l.github.io", R.drawable.ic_smile, true)
         )
         profileAdapter.setData(profileList)
     }
 
     private fun logout() {
-        SoptApplication.preferences.setBoolean("auto_login",false)
+        SoptApplication.preferences.setBoolean("auto_login", false)
         startSignInActivity()
-        finish()
+        activity?.finish()
     }
 
     private fun startSignInActivity() {
-        startActivity(Intent(this, SignInActivity::class.java));
+        startActivity(Intent(context, SignInActivity::class.java));
     }
 
-    private fun startDetailActivity(profile : Profile) {
-        val bundle = Bundle()
-        val intent =
-        if(profile.isAddress){
-            bundle.putString("url",profile.subtitle)
-            Intent(this, DetailWebActivity::class.java)
-        }
-        else {
-            bundle.apply {
-                putString("title",profile.title)
-                putString("subtitle",profile.subtitle)
-                putInt("image",profile.resourceId)
-            }
-            Intent(this, DetailActivity::class.java)
-        }
-        intent.putExtra("bundle",bundle)
+    private fun startDetailFragment(profile: Profile) {
+        val fragment =
+            if(profile.isAddress)
+                DetailWebFragment.newInstance(profile.subtitle)
+            else
+                DetailFragment.newInstance(profile.title, profile.subtitle, profile.resourceId)
 
-        startActivity(intent)
+        val transaction = requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment, fragment)
+            addToBackStack(null)
+        }
+        transaction.commit()
     }
 
     private fun setRecyclerViewLinear() {
         viewDataBinding.recyclerView.apply {
-            layoutManager = linearLayoutManager
+            layoutManager = LinearLayoutManager(context)
             adapter = profileAdapter.apply { setLinearItemViewType() }
         }
     }
 
     private fun setRecyclerViewGrid() {
         viewDataBinding.recyclerView.apply {
-            layoutManager = gridLayoutManager
+            layoutManager = GridLayoutManager(context, 2)
             adapter = profileAdapter.apply { setGridItemViewType() }
         }
     }
+
 }
