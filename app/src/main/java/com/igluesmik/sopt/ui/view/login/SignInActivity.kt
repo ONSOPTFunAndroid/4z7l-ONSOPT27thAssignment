@@ -3,11 +3,12 @@ package com.igluesmik.sopt.ui.view.login
 import android.content.Intent
 import android.widget.Toast
 import com.igluesmik.sopt.R
-import com.igluesmik.sopt.SoptApplication
 import com.igluesmik.sopt.databinding.ActivitySignInBinding
 import com.igluesmik.sopt.ui.view.MainActivity
-import com.igluesmik.sopt.ui.view.base.BaseActivity
+import com.igluesmik.sopt.ui.base.BaseActivity
 import com.igluesmik.sopt.ui.viewmodel.LoginViewModel
+import com.igluesmik.sopt.util.LoginPreference.isAutoLoginSet
+import com.igluesmik.sopt.util.LoginPreference.setUserPreference
 
 class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
 
@@ -19,11 +20,11 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
     override val viewModel: LoginViewModel = LoginViewModel()
 
     override fun initStartView() {
-        initView()
+
     }
 
     override fun initBeforeBinding() {
-
+        viewDataBinding.activity = this
     }
 
     override fun initAfterBinding() {
@@ -33,7 +34,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
     override fun onStart() {
         super.onStart()
 
-        if(SoptApplication.preferences.getBoolean("auto_login", false)){
+        if(isAutoLoginSet()){
             startMainActivity()
         }
     }
@@ -49,26 +50,18 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
         }
     }
 
-    private fun initView() {
-        viewDataBinding.btnRegister.setOnClickListener {
-            startSignUpActivity()
-        }
-        viewDataBinding.btnLogin.setOnClickListener {
-            signIn()
-        }
+    private fun startMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
-    private fun signIn() {
+    fun onSignInButtonClick() {
         val id = viewDataBinding.etId.text
         val password = viewDataBinding.etPassword.text
 
         if(id.isNotEmpty() && password.isNotEmpty()){
+            setUserPreference(id.toString(), password.toString())
             Toast.makeText(this,"로그인 완료!", Toast.LENGTH_SHORT).show()
-
-            SoptApplication.preferences.setBoolean("auto_login",true)
-            SoptApplication.preferences.setString("id",id.toString())
-            SoptApplication.preferences.setString("password",password.toString())
-
             startMainActivity()
         }
         else {
@@ -76,13 +69,8 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, LoginViewModel>() {
         }
     }
 
-    private fun startSignUpActivity() {
+    fun onRegisterButtonClick() {
         startActivityForResult(Intent(this, SignUpActivity::class.java), SIGN_UP_REQUEST_CODE);
-    }
-
-    private fun startMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 
 }

@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.ui.view.itemtouch
+package com.igluesmik.sopt.ui.itemtouch
 
 interface ItemTouchHelperListener {
     fun onItemMoved(from : Int, to : Int)

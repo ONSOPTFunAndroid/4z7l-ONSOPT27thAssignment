@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.ui.view.base
+package com.igluesmik.sopt.ui.base
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

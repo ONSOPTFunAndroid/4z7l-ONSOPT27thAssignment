@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.ui.view.base
+package com.igluesmik.sopt.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +22,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
         super.onCreate(savedInstanceState)
 
         viewDataBinding = DataBindingUtil.setContentView(this, layoutResourceId)
+        viewDataBinding.lifecycleOwner = this
 
         initStartView()
         initBeforeBinding()

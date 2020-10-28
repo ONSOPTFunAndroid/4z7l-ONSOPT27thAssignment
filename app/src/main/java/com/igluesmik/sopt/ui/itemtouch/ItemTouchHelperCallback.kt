@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.ui.view.itemtouch
+package com.igluesmik.sopt.ui.itemtouch
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper

@@ -1,7 +1,7 @@
 package com.igluesmik.sopt.ui.viewmodel
 
-import com.igluesmik.sopt.ui.view.base.BaseViewModel
+import com.igluesmik.sopt.ui.base.BaseViewModel
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel() : BaseViewModel() {
 
 }

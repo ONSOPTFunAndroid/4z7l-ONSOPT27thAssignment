@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.ui.view.base
+package com.igluesmik.sopt.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,6 +30,8 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel> : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater,layoutResourceId, container, false)
+        viewDataBinding.lifecycleOwner = viewLifecycleOwner
+
         val view = viewDataBinding.root
 
         return view

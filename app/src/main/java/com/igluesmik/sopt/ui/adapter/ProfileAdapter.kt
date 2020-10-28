@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.ui.view.adapter
+package com.igluesmik.sopt.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,16 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.igluesmik.sopt.R
-import com.igluesmik.sopt.databinding.ItemProfileBinding
-import com.igluesmik.sopt.databinding.ItemProfileGridBinding
 import com.igluesmik.sopt.model.Profile
-import com.igluesmik.sopt.ui.view.itemtouch.ItemTouchHelperListener
-import kotlinx.android.synthetic.main.item_profile.view.*
+import com.igluesmik.sopt.ui.itemtouch.ItemTouchHelperListener
 import java.util.*
 
 class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>(), ItemTouchHelperListener {
@@ -29,7 +23,7 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
 
     private var onItemClickListener : ((Profile) -> Unit) ?= null
 
-    fun setData(data : MutableList<Profile>) {
+    fun setData(data : List<Profile>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()

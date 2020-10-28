@@ -1,8 +1,10 @@
 package com.igluesmik.sopt
 
 import android.app.Application
-import android.content.SharedPreferences
+import com.igluesmik.sopt.di.DiModule
 import com.igluesmik.sopt.util.PreferenceUtil
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class SoptApplication : Application(){
     companion object{
@@ -10,7 +12,11 @@ class SoptApplication : Application(){
     }
 
     override fun onCreate() {
-        preferences = PreferenceUtil(applicationContext)
         super.onCreate()
+        preferences = PreferenceUtil(applicationContext)
+        startKoin {
+            androidContext(applicationContext)
+            modules(DiModule)
+        }
     }
 }

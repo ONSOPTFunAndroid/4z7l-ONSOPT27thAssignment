@@ -1,11 +1,10 @@
 package com.igluesmik.sopt.ui.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.databinding.ActivityMainBinding
-import com.igluesmik.sopt.ui.view.base.BaseActivity
-import com.igluesmik.sopt.ui.view.base.BaseViewModel
+import com.igluesmik.sopt.ui.base.BaseActivity
+import com.igluesmik.sopt.ui.base.BaseViewModel
 import com.igluesmik.sopt.ui.view.profile.ProfileFragment
 
 

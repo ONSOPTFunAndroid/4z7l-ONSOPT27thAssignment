@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="fragment"
+            type="com.igluesmik.sopt.ui.view.profile.ProfileFragment" />
+    </data>
 
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -40,7 +45,8 @@
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:background="@android:color/transparent"
-                    android:layout_gravity="center_vertical|end"/>
+                    android:layout_gravity="center_vertical|end"
+                    android:onClick="@{(v)-> fragment.onLinearLayoutButtonClick()}"/>
 
                 <ImageButton
                     android:id="@+id/btn_grid"
@@ -51,7 +57,8 @@
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:background="@android:color/transparent"
-                    android:layout_gravity="center_vertical|end"/>
+                    android:layout_gravity="center_vertical|end"
+                    android:onClick="@{(v)-> fragment.onGridLayoutButtonClick()}"/>
 
             </FrameLayout>
 
@@ -75,7 +82,8 @@
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:background="@drawable/background_button"/>
+                android:background="@drawable/background_button"
+                android:onClick="@{(v)-> fragment.onSignOutButtonClick()}"/>
 
         </LinearLayout>
 
