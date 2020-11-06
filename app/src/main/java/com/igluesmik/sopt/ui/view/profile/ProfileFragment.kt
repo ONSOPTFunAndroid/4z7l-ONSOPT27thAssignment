@@ -1,6 +1,7 @@
 package com.igluesmik.sopt.ui.view.profile
 
 import android.content.Intent
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,10 +39,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun observeProfileList() {
-        viewModel.profileList.observe(this,{
+        viewModel.profileList.observe(viewLifecycleOwner) {
             profileAdapter.setData(it)
             viewDataBinding.recyclerView.adapter = profileAdapter
-        })
+        }
     }
 
     private fun initProfileData() {
@@ -82,11 +83,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 DetailFragment.newInstance(profile.id)
             }
 
-        val transaction = requireActivity().supportFragmentManager.beginTransaction().apply {
+        /*val transaction = requireActivity().supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment, fragment)
             addToBackStack(null)
         }
-        transaction.commit()
+        transaction.commit()*/
     }
 
     fun onSignOutButtonClick() {

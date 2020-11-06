@@ -26,7 +26,7 @@ class ProfileViewModel(private val repo : ProfileRepoImpl) : BaseViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                _profileData.value = it
+                _profileData.postValue(it)
             }, {
                 Log.e(TAG, "Get Profile", it)
             })
