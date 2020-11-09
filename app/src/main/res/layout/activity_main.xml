@@ -7,17 +7,14 @@
         android:layout_height="match_parent"
         tools:context=".ui.view.MainActivity">
 
-        <fragment
-            android:id="@+id/navigation_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/navigation_graph" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
@@ -26,6 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:background="@android:color/white"
+            android:paddingVertical="5dp"
             app:menu="@menu/menu"
             app:itemIconTint="@color/color_bottom_navigation"
             app:itemTextColor="@color/color_bottom_navigation" />
