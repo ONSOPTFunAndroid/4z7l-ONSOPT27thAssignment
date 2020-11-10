@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".ui.view.MainActivity"></activity>
+        <activity android:name=".ui.view.detail.DetailActivity"></activity>
+        <activity android:name=".ui.view.MainActivity" />
         <activity android:name=".ui.view.login.SignUpActivity" />
         <activity android:name=".ui.view.login.SignInActivity">
             <intent-filter>

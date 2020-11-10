@@ -9,6 +9,7 @@ import com.igluesmik.sopt.ui.adapter.MainViewPagerAdapter
 import com.igluesmik.sopt.ui.base.BaseActivity
 import com.igluesmik.sopt.ui.base.BaseViewModel
 import com.igluesmik.sopt.ui.view.home.HomeFragment
+import com.igluesmik.sopt.ui.view.profile.DetailFragment
 import com.igluesmik.sopt.ui.view.profile.ProfileFragment
 import com.igluesmik.sopt.ui.view.settings.SettingsFragment
 import kotlin.properties.Delegates

@@ -1,6 +1,8 @@
 package com.igluesmik.sopt.ui.view.profile
 
 import android.os.Bundle
+import android.view.View
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.databinding.FragmentDetailBinding
 import com.igluesmik.sopt.ui.base.BaseFragment

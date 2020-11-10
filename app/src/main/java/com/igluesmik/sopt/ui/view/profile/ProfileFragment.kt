@@ -11,9 +11,8 @@ import com.igluesmik.sopt.model.Profile
 import com.igluesmik.sopt.ui.adapter.ProfileAdapter
 import com.igluesmik.sopt.ui.base.BaseFragment
 import com.igluesmik.sopt.ui.itemtouch.ItemTouchHelperCallback
-import com.igluesmik.sopt.ui.view.login.SignInActivity
+import com.igluesmik.sopt.ui.view.detail.DetailActivity
 import com.igluesmik.sopt.ui.viewmodel.ProfileViewModel
-import com.igluesmik.sopt.util.LoginPreference.setAutoLogin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -41,16 +40,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     private fun observeProfileList() {
         viewModel.profileList.observe(viewLifecycleOwner) {
             profileAdapter.setData(it)
-            viewDataBinding.recyclerView.adapter = profileAdapter
+            profileAdapter.notifyDataSetChanged()
         }
     }
 
     private fun initProfileData() {
-        viewModel.insert(Profile(1,"이름", "김슬기", R.drawable.ic_smile, false))
-        viewModel.insert(Profile(2,"나이", "23", R.drawable.ic_smile, false))
-        viewModel.insert(Profile(3,"파트", "안드로이드", R.drawable.ic_smile, false))
-        viewModel.insert(Profile(4,"Github", "https://www.github.com/4z7l", R.drawable.ic_smile, true))
-        viewModel.insert(Profile(5,"Blog", "https://4z7l.github.io", R.drawable.ic_smile, true))
+        viewModel.insert(Profile(1, "이름", "김슬기", R.drawable.ic_smile, false))
+        viewModel.insert(Profile(2, "나이", "23", R.drawable.ic_smile, false))
+        viewModel.insert(Profile(3, "파트", "안드로이드", R.drawable.ic_smile, false))
+        viewModel.insert(
+            Profile(
+                4,
+                "Github",
+                "https://www.github.com/4z7l",
+                R.drawable.ic_smile,
+                true
+            )
+        )
+        viewModel.insert(Profile(5, "Blog", "https://4z7l.github.io", R.drawable.ic_smile, true))
     }
 
     private fun initRecyclerView() {
@@ -72,28 +79,21 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
-    private fun startSignInActivity() {
-        startActivity(Intent(context, SignInActivity::class.java));
-    }
-
     private fun startDetailFragment(profile: Profile) {
-        val fragment = if(profile.isAddress) {
+        /*val fragment = if(profile.isAddress) {
                 DetailWebFragment.newInstance(profile.id)
             } else{
                 DetailFragment.newInstance(profile.id)
             }
 
-        /*val transaction = requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment, fragment)
+        val transaction = requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container, fragment)
             addToBackStack(null)
         }
         transaction.commit()*/
-    }
 
-    fun onSignOutButtonClick() {
-        setAutoLogin(false)
-        startSignInActivity()
-        activity?.finish()
+        startActivity(Intent(activity, DetailActivity::class.java)
+            .putExtra("id",profile.id))
     }
 
     fun onLinearLayoutButtonClick() {

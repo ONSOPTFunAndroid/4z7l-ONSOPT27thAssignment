@@ -11,21 +11,20 @@ import io.reactivex.schedulers.Schedulers
 
 class ProfileViewModel(private val repo : ProfileRepoImpl) : BaseViewModel() {
 
-    companion object{
-        private val TAG = ProfileViewModel::class.java.simpleName
-    }
-
     private val _profileList : LiveData<List<Profile>> = repo.getAll()
-    val profileList : LiveData<List<Profile>> = _profileList
+    val profileList : LiveData<List<Profile>>
+        get() =  _profileList
 
     private val _profileData = MutableLiveData<Profile>()
-    val profileData = _profileData
+    val profileData : LiveData<Profile>
+        get() = _profileData
 
     fun getProfileById(id : Int){
         addDisposable(repo.getProfileById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                //_profileData.value = it
                 _profileData.postValue(it)
             }, {
                 Log.e(TAG, "Get Profile", it)
@@ -67,5 +66,9 @@ class ProfileViewModel(private val repo : ProfileRepoImpl) : BaseViewModel() {
                 Log.e(TAG, "Delete", it)
             })
         )
+    }
+
+    companion object{
+        private val TAG = ProfileViewModel::class.java.simpleName
     }
 }
