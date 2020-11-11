@@ -1,7 +1,7 @@
-package com.igluesmik.sopt.network.repository
+package com.igluesmik.sopt.data.repository
 
 import androidx.lifecycle.LiveData
-import com.igluesmik.sopt.model.Profile
+import com.igluesmik.sopt.data.model.Profile
 import io.reactivex.Completable
 import io.reactivex.Single
 

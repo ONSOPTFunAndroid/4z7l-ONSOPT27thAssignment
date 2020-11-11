@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.network.base
+package com.igluesmik.sopt.data.base
 
 import androidx.room.Delete
 import androidx.room.Insert

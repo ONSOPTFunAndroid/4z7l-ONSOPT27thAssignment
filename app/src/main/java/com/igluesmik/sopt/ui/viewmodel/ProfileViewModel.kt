@@ -3,8 +3,8 @@ package com.igluesmik.sopt.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.igluesmik.sopt.model.Profile
-import com.igluesmik.sopt.network.repository.ProfileRepoImpl
+import com.igluesmik.sopt.data.model.Profile
+import com.igluesmik.sopt.data.repository.ProfileRepoImpl
 import com.igluesmik.sopt.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

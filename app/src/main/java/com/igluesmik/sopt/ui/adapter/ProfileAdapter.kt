@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.igluesmik.sopt.R
-import com.igluesmik.sopt.model.Profile
+import com.igluesmik.sopt.data.model.Profile
 import com.igluesmik.sopt.ui.itemtouch.ItemTouchHelperListener
 import java.util.*
 
