@@ -48,15 +48,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewModel.insert(Profile(1, "이름", "김슬기", R.drawable.ic_smile, false))
         viewModel.insert(Profile(2, "나이", "23", R.drawable.ic_smile, false))
         viewModel.insert(Profile(3, "파트", "안드로이드", R.drawable.ic_smile, false))
-        viewModel.insert(
-            Profile(
-                4,
-                "Github",
-                "https://www.github.com/4z7l",
-                R.drawable.ic_smile,
-                true
-            )
-        )
+        viewModel.insert(Profile(4, "Github", "https://www.github.com/4z7l", R.drawable.ic_smile, true))
         viewModel.insert(Profile(5, "Blog", "https://4z7l.github.io", R.drawable.ic_smile, true))
     }
 
@@ -80,18 +72,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun startDetailFragment(profile: Profile) {
-        /*val fragment = if(profile.isAddress) {
-                DetailWebFragment.newInstance(profile.id)
-            } else{
-                DetailFragment.newInstance(profile.id)
-            }
-
-        val transaction = requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragment)
-            addToBackStack(null)
-        }
-        transaction.commit()*/
-
         startActivity(Intent(activity, DetailActivity::class.java)
             .putExtra("id",profile.id))
     }

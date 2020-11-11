@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.igluesmik.sopt.ui.viewmodel.ProfileViewModel" />
+            name="profile"
+            type="com.igluesmik.sopt.data.model.Profile" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,11 +30,11 @@
                 android:layout_height="100dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_error"
-                bindProfileImage="@{viewModel.profileData.resourceId}"/>
+                bindProfileImage="@{profile.resourceId}"/>
 
             <TextView
                 android:id="@+id/txt_title"
-                android:text="@{viewModel.profileData.title}"
+                android:text="@{profile.title}"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -44,13 +44,24 @@
 
             <TextView
                 android:id="@+id/txt_subtitle"
-                android:text="@{viewModel.profileData.subtitle}"
+                android:text="@{profile.subtitle}"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+
         </LinearLayout>
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

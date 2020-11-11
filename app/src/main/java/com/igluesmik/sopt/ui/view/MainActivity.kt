@@ -1,15 +1,12 @@
 package com.igluesmik.sopt.ui.view
 
-import android.os.Bundle
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.databinding.ActivityMainBinding
-import com.igluesmik.sopt.ui.adapter.MainViewPagerAdapter
+import com.igluesmik.sopt.ui.adapter.ViewPagerAdapter
 import com.igluesmik.sopt.ui.base.BaseActivity
 import com.igluesmik.sopt.ui.base.BaseViewModel
 import com.igluesmik.sopt.ui.view.home.HomeFragment
-import com.igluesmik.sopt.ui.view.profile.DetailFragment
 import com.igluesmik.sopt.ui.view.profile.ProfileFragment
 import com.igluesmik.sopt.ui.view.settings.SettingsFragment
 import kotlin.properties.Delegates
@@ -21,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseViewModel>() {
         get() = R.layout.activity_main
     override val viewModel = BaseViewModel()
 
-    private lateinit var viewPagerAdapter: MainViewPagerAdapter
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun initStartView() {
         initBottomNavigation()
@@ -50,7 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseViewModel>() {
     }
 
     private fun initViewPager() {
-        viewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
+        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         viewPagerAdapter.setFragmentList(
             listOf(
                 HomeFragment(),

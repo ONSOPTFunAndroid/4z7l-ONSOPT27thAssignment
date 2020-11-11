@@ -17,9 +17,14 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, ProfileViewModel>() {
     }
 
     override fun initBeforeBinding() {
-        viewDataBinding.viewModel = viewModel
         viewModel.getProfileById(intent.getIntExtra("id",1))
-
+        viewModel.profileData.observe(this){
+            viewDataBinding.profile = it
+            if(it.isAddress){
+                viewDataBinding.webView.loadUrl(it.subtitle)
+                finish()
+            }
+        }
     }
 
     override fun initAfterBinding() {
