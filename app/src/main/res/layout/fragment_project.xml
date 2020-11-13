@@ -9,13 +9,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#0f0"
         tools:context=".ui.view.home.ProjectFragment">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:text="PROJECT" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

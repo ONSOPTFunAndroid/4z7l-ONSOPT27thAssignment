@@ -27,7 +27,8 @@
             android:paddingVertical="5dp"
             app:menu="@menu/menu"
             app:itemIconTint="@color/color_bottom_navigation"
-            app:itemTextColor="@color/color_bottom_navigation" />
+            app:itemTextColor="@color/color_bottom_navigation"
+            app:labelVisibilityMode="unlabeled" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

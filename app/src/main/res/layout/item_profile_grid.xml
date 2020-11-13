@@ -6,7 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="30dp"
+        android:padding="20dp"
         android:layout_margin="10dp"
         android:elevation="5dp"
         android:layout_width="match_parent"
@@ -21,15 +21,16 @@
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="Title"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#030303"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -39,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Subtitle"
-                android:textColor="#000"
                 android:textSize="16sp" />
 
     </LinearLayout>
