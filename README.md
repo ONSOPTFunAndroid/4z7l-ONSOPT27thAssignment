@@ -28,8 +28,10 @@
 	+ [필수 과제](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%ED%95%84%EC%88%98-%EA%B3%BC%EC%A0%9C-1)
 	+ [성장 과제1](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%EC%84%B1%EC%9E%A5-%EA%B3%BC%EC%A0%9C-1)
 	+ [성장 과제2](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%EC%84%B1%EC%9E%A5-%EA%B3%BC%EC%A0%9C-2-1)
-- [**3주차**]()
+- [**3주차**](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#3%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C)
+	+ [필수 과제](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%ED%95%84%EC%88%98-%EA%B3%BC%EC%A0%9C-2)
 
+<br>
 
 # 1주차 과제
 
@@ -419,7 +421,7 @@ class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : I
 }
 ```
 
-
+<br>
 
 # 3주차 과제
 
@@ -430,7 +432,7 @@ class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : I
 | ![image](/images/3w.gif) |
 
 
-
+<br>
 
 
 ## 필수 과제
