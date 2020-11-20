@@ -28,7 +28,7 @@
 	+ [필수 과제](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%ED%95%84%EC%88%98-%EA%B3%BC%EC%A0%9C-1)
 	+ [성장 과제1](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%EC%84%B1%EC%9E%A5-%EA%B3%BC%EC%A0%9C-1)
 	+ [성장 과제2](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%EC%84%B1%EC%9E%A5-%EA%B3%BC%EC%A0%9C-2-1)
-
+- [**3주차**]()
 
 
 # 1주차 과제
@@ -415,6 +415,116 @@ class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : I
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         ...
+    }
+}
+```
+
+
+
+# 3주차 과제
+
+
+
+|        필수 과제         |
+| :----------------------: |
+| ![image](/images/3w.gif) |
+
+
+
+
+
+## 필수 과제
+
+- 하단 bottomnavigation + 뷰페이저로 화면 구성
+- 프로필 - 리사이클러뷰화면 - 비어있는 화면
+- 프로필 화면에 Tablayout
+
+<br>
+
+> #### 주요 코드
+
+1. MainActivity에 HomeFragment, OtherFragment, ProjectFragment 추가
+2. 1의 Fragment들을 viewpager로 구성
+3. HomeFragment에도 Tablayout+ViewPager 구성
+
+- **MainActivity.kt**
+
+```kotlin
+private fun initBottomNavigation() {
+    viewDataBinding.bottomNavigationView.setOnNavigationItemSelectedListener {
+        var index by Delegates.notNull<Int>()
+        when (it.itemId) {
+            R.id.menu_home -> index = 0
+            R.id.menu_profile -> index = 1
+            R.id.menu_settings -> index = 2
+        }
+        viewDataBinding.viewPager.currentItem = index
+        true
+    }
+}
+
+private fun initViewPager() {
+    viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+    viewPagerAdapter.setFragmentList(
+        listOf(
+            HomeFragment(),
+            ProfileFragment(),
+            SettingsFragment()
+        )
+    )
+    viewDataBinding.viewPager.adapter = viewPagerAdapter
+    viewDataBinding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        override fun onPageScrollStateChanged(state: Int) {}
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+        }
+        override fun onPageSelected(position: Int) {
+            viewDataBinding.bottomNavigationView.menu.getItem(position).isChecked = true
+        }
+    })
+}
+```
+
+
+
+- **ViewPagerAdapter.kt**
+
+```kotlin
+class ViewPagerAdapter(fragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    private val fragmentList = mutableListOf<Fragment>()
+
+    fun setFragmentList(list: List<Fragment>) {
+        fragmentList.clear()
+        fragmentList.addAll(list)
+    }
+
+    override fun getItem(position: Int): Fragment = fragmentList[position]
+
+    override fun getCount(): Int = fragmentList.size
+}
+```
+
+
+
+- **HomeFragment.kt**
+
+```kotlin
+private fun initViewPager() {
+    viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
+    viewPagerAdapter.setFragmentList(listOf(
+        ProjectFragment(), OtherFragment()
+    ))
+    viewDataBinding.viewPager.adapter = viewPagerAdapter
+
+    viewDataBinding.tabLayout.setupWithViewPager(viewDataBinding.viewPager)
+    viewDataBinding.tabLayout.apply {
+        getTabAt(0)?.text = "Project"
+        getTabAt(1)?.text = "Other"
     }
 }
 ```
