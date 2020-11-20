@@ -9,7 +9,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) :
 
     private val fragmentList = mutableListOf<Fragment>()
 
-    fun setFragmentList(list : List<Fragment>) {
+    fun setFragmentList(list: List<Fragment>) {
         fragmentList.clear()
         fragmentList.addAll(list)
     }

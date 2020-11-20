@@ -32,9 +32,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel> : Fragment()
         viewDataBinding = DataBindingUtil.inflate(inflater,layoutResourceId, container, false)
         viewDataBinding.lifecycleOwner = viewLifecycleOwner
 
-        val view = viewDataBinding.root
-
-        return view
+        return viewDataBinding.root
     }
 
 }
