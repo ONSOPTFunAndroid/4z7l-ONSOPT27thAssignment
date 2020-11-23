@@ -1,8 +1,8 @@
 package com.igluesmik.sopt.data.repository
 
 import androidx.lifecycle.LiveData
-import com.igluesmik.sopt.data.model.Profile
-import com.igluesmik.sopt.data.local.ProfileDao
+import com.igluesmik.sopt.data.model.entity.Profile
+import com.igluesmik.sopt.data.local.profile.ProfileDao
 import io.reactivex.Completable
 import io.reactivex.Single
 

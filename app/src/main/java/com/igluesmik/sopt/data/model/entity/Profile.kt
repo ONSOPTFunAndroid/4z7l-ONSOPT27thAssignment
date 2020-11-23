@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.data.model
+package com.igluesmik.sopt.data.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

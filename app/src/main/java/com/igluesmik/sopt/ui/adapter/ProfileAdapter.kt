@@ -8,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.igluesmik.sopt.R
-import com.igluesmik.sopt.data.model.Profile
+import com.igluesmik.sopt.data.model.entity.Profile
 import com.igluesmik.sopt.ui.itemtouch.ItemTouchHelperListener
+import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
 class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>(), ItemTouchHelperListener {

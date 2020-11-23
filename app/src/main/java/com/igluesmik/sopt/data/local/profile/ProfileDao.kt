@@ -1,8 +1,8 @@
-package com.igluesmik.sopt.data.local
+package com.igluesmik.sopt.data.local.profile
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.igluesmik.sopt.data.model.Profile
+import com.igluesmik.sopt.data.model.entity.Profile
 import io.reactivex.Completable
 import io.reactivex.Single
 

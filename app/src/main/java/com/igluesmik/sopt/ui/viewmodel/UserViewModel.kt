@@ -1,0 +1,55 @@
+package com.igluesmik.sopt.ui.viewmodel
+
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.igluesmik.sopt.Event
+import com.igluesmik.sopt.data.model.network.request.RequestSignIn
+import com.igluesmik.sopt.data.model.network.request.RequestSignUp
+import com.igluesmik.sopt.data.model.network.response.ResponseSignIn
+import com.igluesmik.sopt.data.model.network.response.ResponseSignUp
+import com.igluesmik.sopt.data.repository.UserRepo
+import com.igluesmik.sopt.data.repository.UserRepoImpl
+import com.igluesmik.sopt.ui.base.BaseViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
+class UserViewModel(private val repo: UserRepoImpl) : BaseViewModel() {
+
+    private var _signIn = MutableLiveData<ResponseSignIn>()
+    val signIn: LiveData<ResponseSignIn> = _signIn
+
+    private var _signUp = MutableLiveData<ResponseSignUp>()
+    val signUp: LiveData<ResponseSignUp> = _signUp
+
+    private var _isSignUpSuccess = MutableLiveData<Event<Boolean>>()
+    val isSignUpSuccess: LiveData<Event<Boolean>> = _isSignUpSuccess
+
+    fun signIn(body: RequestSignIn) {
+        addDisposable(repo.signIn(body)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _signIn.postValue(it)
+            }, {
+                Log.e(TAG, "signIn", it)
+            })
+        )
+    }
+
+    fun signUp(body: RequestSignUp){
+        addDisposable(repo.signUp(body)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _signUp.postValue(it)
+            }, {
+                Log.e(TAG, "signUp", it)
+            })
+        )
+    }
+
+    companion object{
+        private val TAG = UserViewModel::class.java.simpleName
+    }
+}

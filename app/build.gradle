@@ -76,6 +76,13 @@ dependencies {
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
-    //circleimageview
+    //circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //retrofit
+    def retrofitVersion = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }

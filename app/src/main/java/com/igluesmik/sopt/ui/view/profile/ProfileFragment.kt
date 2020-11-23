@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igluesmik.sopt.R
 import com.igluesmik.sopt.databinding.FragmentProfileBinding
-import com.igluesmik.sopt.data.model.Profile
+import com.igluesmik.sopt.data.model.entity.Profile
 import com.igluesmik.sopt.ui.adapter.ProfileAdapter
 import com.igluesmik.sopt.ui.base.BaseFragment
 import com.igluesmik.sopt.ui.itemtouch.ItemTouchHelperCallback
