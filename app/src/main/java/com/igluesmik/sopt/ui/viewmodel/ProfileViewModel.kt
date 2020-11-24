@@ -4,12 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.igluesmik.sopt.data.model.entity.Profile
+import com.igluesmik.sopt.data.repository.ProfileRepo
 import com.igluesmik.sopt.data.repository.ProfileRepoImpl
 import com.igluesmik.sopt.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ProfileViewModel(private val repo : ProfileRepoImpl) : BaseViewModel() {
+class ProfileViewModel(private val repo : ProfileRepo) : BaseViewModel() {
 
     private val _profileList : LiveData<List<Profile>> = repo.getAll()
     val profileList : LiveData<List<Profile>>

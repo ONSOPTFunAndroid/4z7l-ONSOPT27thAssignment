@@ -30,24 +30,27 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
         viewModel.signUp.observe(this, {
             if(it.success) {
                 Toast.makeText(this,"회원가입 완료!",Toast.LENGTH_SHORT).show()
-
-                val intent = Intent().apply {
-                    putExtra("id",viewDataBinding.etId.text.toString())
-                    putExtra("password",viewDataBinding.etPassword.text.toString())
-                }
-                setResult(RESULT_OK, intent)
-                finish()
+                finishActivityResult()
             }
         })
     }
 
+    private fun finishActivityResult() {
+        val intent = Intent().apply {
+            putExtra("email",viewDataBinding.etEmail.text.toString())
+            putExtra("password",viewDataBinding.etPassword.text.toString())
+        }
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+
     fun onSignUpButtonClick() {
-        val id = viewDataBinding.etId.text.toString()
+        val email = viewDataBinding.etEmail.text.toString()
         val name = viewDataBinding.etName.text.toString()
         val password = viewDataBinding.etPassword.text.toString()
 
-        if(id.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty()) {
-            viewModel.signUp(RequestSignUp(email = id, password = password, userName = name))
+        if(email.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty()) {
+            viewModel.signUp(email, password, name)
         }
         else {
             Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()

@@ -42,32 +42,10 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
 
         if(requestCode==SIGN_UP_REQUEST_CODE){
             if(resultCode== RESULT_OK){
-                viewDataBinding.etId.setText(data?.getStringExtra("id"))
+                viewDataBinding.etEmail.setText(data?.getStringExtra("email"))
                 viewDataBinding.etPassword.setText(data?.getStringExtra("password"))
             }
         }
-    }
-
-    fun onSignInButtonClick() {
-        val id = viewDataBinding.etId.text.toString()
-        val password = viewDataBinding.etPassword.text.toString()
-
-        if(id.isNotEmpty() && password.isNotEmpty()){
-            setUserPreference(id, password)
-            viewModel.signIn(RequestSignIn(id,password))
-        }
-        else {
-            Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun onRegisterButtonClick() {
-        startActivityForResult(Intent(this, SignUpActivity::class.java), SIGN_UP_REQUEST_CODE);
-    }
-
-    private fun startMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 
     private fun observeSignInResult() {
@@ -75,6 +53,28 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
             if(it.success) startMainActivity()
             Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
         })
+    }
+
+    private fun startMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    fun onSignInButtonClick() {
+        val email = viewDataBinding.etEmail.text.toString()
+        val password = viewDataBinding.etPassword.text.toString()
+
+        if(email.isNotEmpty() && password.isNotEmpty()){
+            setUserPreference(email, password)
+            viewModel.signIn(email,password)
+        }
+        else {
+            Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun onRegisterButtonClick() {
+        startActivityForResult(Intent(this, SignUpActivity::class.java), SIGN_UP_REQUEST_CODE)
     }
 
     companion object{

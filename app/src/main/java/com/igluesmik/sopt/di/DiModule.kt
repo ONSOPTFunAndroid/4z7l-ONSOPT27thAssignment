@@ -1,9 +1,15 @@
 package com.igluesmik.sopt.di
 
 import androidx.room.Room
-import com.igluesmik.sopt.data.local.profile.ProfileDatabase
-import com.igluesmik.sopt.data.remote.UserService
+import com.igluesmik.sopt.data.local.datasource.ProfileLocalDataSource
+import com.igluesmik.sopt.data.local.database.ProfileDatabase
+import com.igluesmik.sopt.data.local.datasource.ProfileLocalDataSourceImpl
+import com.igluesmik.sopt.data.remote.api.UserService
+import com.igluesmik.sopt.data.remote.datasource.UserRemoteDataSource
+import com.igluesmik.sopt.data.remote.datasource.UserRemoteDataSourceImpl
+import com.igluesmik.sopt.data.repository.ProfileRepo
 import com.igluesmik.sopt.data.repository.ProfileRepoImpl
+import com.igluesmik.sopt.data.repository.UserRepo
 import com.igluesmik.sopt.data.repository.UserRepoImpl
 import com.igluesmik.sopt.ui.viewmodel.ProfileViewModel
 import com.igluesmik.sopt.ui.viewmodel.UserViewModel
@@ -23,7 +29,7 @@ val databaseModule = module {
     single { get<ProfileDatabase>().profileDao() }
 }
 
-val remoteDataSourceModule = module {
+val networkModule = module {
     single {
         Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -31,17 +37,32 @@ val remoteDataSourceModule = module {
             .baseUrl("http://15.164.83.210:3000")
             .build()
     }
-    single { get<Retrofit>().create(UserService::class.java) }
+    single<UserService> { get<Retrofit>().create(UserService::class.java) }
+}
+
+val localDataSourceModule = module {
+    single<ProfileLocalDataSource> { ProfileLocalDataSourceImpl(get()) }
+}
+
+val remoteDataSourceModule = module {
+    single<UserRemoteDataSource> { UserRemoteDataSourceImpl(get())}
 }
 
 val repositoryModule = module {
-    single { ProfileRepoImpl(get()) }
-    single { UserRepoImpl(get()) }
+    single<ProfileRepo> { ProfileRepoImpl(get()) }
+    single<UserRepo> { UserRepoImpl(get()) }
 }
 
-val viewModelModule = module{
+val viewModelModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { UserViewModel(get()) }
 }
 
-val DiModule = listOf(databaseModule, remoteDataSourceModule, repositoryModule, viewModelModule)
+val DiModule = listOf(
+    databaseModule,
+    networkModule,
+    localDataSourceModule,
+    remoteDataSourceModule,
+    repositoryModule,
+    viewModelModule
+)

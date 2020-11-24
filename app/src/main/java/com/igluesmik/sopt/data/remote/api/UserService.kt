@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.data.remote
+package com.igluesmik.sopt.data.remote.api
 
 import com.igluesmik.sopt.data.model.network.request.RequestSignIn
 import com.igluesmik.sopt.data.model.network.request.RequestSignUp

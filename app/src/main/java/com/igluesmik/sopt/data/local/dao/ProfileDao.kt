@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.data.local.profile
+package com.igluesmik.sopt.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

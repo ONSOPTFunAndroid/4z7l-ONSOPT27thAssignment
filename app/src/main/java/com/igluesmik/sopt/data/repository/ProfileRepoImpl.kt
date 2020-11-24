@@ -1,24 +1,29 @@
 package com.igluesmik.sopt.data.repository
 
 import androidx.lifecycle.LiveData
+import com.igluesmik.sopt.data.local.datasource.ProfileLocalDataSource
 import com.igluesmik.sopt.data.model.entity.Profile
-import com.igluesmik.sopt.data.local.profile.ProfileDao
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class ProfileRepoImpl(private val dao: ProfileDao) : ProfileRepo{
-    override fun getProfileById(id: Int): Single<Profile>
-            = dao.getProfileById(id)
+class ProfileRepoImpl(private val profileLocalDataSource: ProfileLocalDataSource) : ProfileRepo {
+    override fun getProfileById(id: Int): Single<Profile> {
+        return profileLocalDataSource.getProfileById(id)
+    }
 
-    override fun getAll(): LiveData<List<Profile>>
-            = dao.getAll()
+    override fun getAll(): LiveData<List<Profile>> {
+        return profileLocalDataSource.getAll()
+    }
 
-    override fun insert(profile: Profile): Completable
-            = dao.insert(profile)
+    override fun insert(profile: Profile): Completable {
+        return profileLocalDataSource.insert(profile)
+    }
 
-    override fun delete(id: Int): Completable
-            = dao.delete(id)
+    override fun delete(id: Int): Completable {
+        return profileLocalDataSource.delete(id)
+    }
 
-    override fun deleteAll(): Completable
-            = dao.deleteAll()
+    override fun deleteAll(): Completable {
+        return profileLocalDataSource.deleteAll()
+    }
 }
