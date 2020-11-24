@@ -7,6 +7,6 @@ import com.igluesmik.sopt.data.model.network.response.ResponseSignUp
 import io.reactivex.Single
 
 interface UserRepo {
-    fun signIn(body: RequestSignIn): Single<ResponseSignIn>
-    fun signUp(body: RequestSignUp): Single<ResponseSignUp>
+    fun signIn(email: String, password: String): Single<ResponseSignIn>
+    fun signUp(email: String, password: String, userName: String): Single<ResponseSignUp>
 }

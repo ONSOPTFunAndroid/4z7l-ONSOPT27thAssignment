@@ -8,11 +8,11 @@ import com.igluesmik.sopt.data.remote.datasource.UserRemoteDataSource
 import io.reactivex.Single
 
 class UserRepoImpl(private val userRemoteDataSource: UserRemoteDataSource) : UserRepo {
-    override fun signIn(body: RequestSignIn): Single<ResponseSignIn> {
-        return userRemoteDataSource.signIn(body)
+    override fun signIn(email: String, password: String): Single<ResponseSignIn> {
+        return userRemoteDataSource.signIn(email, password)
     }
 
-    override fun signUp(body: RequestSignUp): Single<ResponseSignUp> {
-        return userRemoteDataSource.signUp(body)
+    override fun signUp(email: String, password: String, userName: String): Single<ResponseSignUp> {
+        return userRemoteDataSource.signUp(email, password, userName)
     }
 }

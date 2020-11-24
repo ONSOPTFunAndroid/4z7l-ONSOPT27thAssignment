@@ -22,7 +22,7 @@ class UserViewModel(private val repo: UserRepo) : BaseViewModel() {
 
     fun signIn(email: String, password: String) {
         addDisposable(
-            repo.signIn(RequestSignIn(email,password))
+            repo.signIn(email,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -35,7 +35,7 @@ class UserViewModel(private val repo: UserRepo) : BaseViewModel() {
 
     fun signUp(email: String, password: String, userName: String) {
         addDisposable(
-            repo.signUp(RequestSignUp(email, password, userName))
+            repo.signUp(email, password, userName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

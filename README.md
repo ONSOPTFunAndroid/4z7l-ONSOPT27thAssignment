@@ -1,4 +1,4 @@
-# ON SOPT 27th Android Assignment
+# ON SOPT 27th Android Assignment(수정중)
 
  SOPT 27기 안드로이드 세미나 과제
 
@@ -6,15 +6,18 @@
 
 ### Spec
 
-- Architecture : MVVM
-- Dependency Injection : Koin
-- Jetpack(ViewModel, Databinding, LiveData, Room)
+- Architecture : [MVVM](https://github.com/4z7l/Today-I-Learned/blob/master/Architecture_Pattern/MVVM.md)
+- Design Pattern : [Repository Pattern](https://github.com/4z7l/Today-I-Learned/blob/master/Design_Pattern/Repository_Pattern.md)
+- [Dependency Injection](https://github.com/4z7l/Today-I-Learned/blob/master/Android/di.md) : Koin
+- [AAC](https://4z7l.github.io/2020/09/21/android-aac.html) : Jetpack(ViewModel, Databinding, LiveData, Room)
+- Retrofit2
 
 
 
 ### Third Party Library
 
-- RxJava
+- [RxJava](https://github.com/4z7l/Today-I-Learned/blob/master/Android/Rx.md)
+- Circle Image View
 
 
 
@@ -30,6 +33,9 @@
 	+ [성장 과제2](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%EC%84%B1%EC%9E%A5-%EA%B3%BC%EC%A0%9C-2-1)
 - [**3주차**](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#3%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C)
 	+ [필수 과제](https://github.com/ONSOPTFunAndroid/4z7l-ONSOPT27thAssignment#%ED%95%84%EC%88%98-%EA%B3%BC%EC%A0%9C-2)
+
+- [6주차]()
+  - [필수 과제]()
 
 <br>
 
@@ -532,4 +538,141 @@ private fun initViewPager() {
 ```
 
 
+
+# 6주차 과제
+
+
+
+## 필수 과제
+
+- 로그인/회원가입 서버 연동
+
+
+
+> POSTMAN 테스트
+
+- 로그인 테스트
+
+![img](/images/postman_signin.PNG)
+
+
+
+- 회원가입 테스트
+
+![img](/images/postman_signup.PNG)
+
+
+
+> 주요 코드
+
+- **RequestSignIn**
+
+```kotlin
+data class RequestSignIn(
+    val email: String,
+    val password: String
+)
+```
+
+
+
+- **RequestSignUp**
+
+```kotlin
+data class RequestSignUp (
+    val email: String,
+    val password: String,
+    val userName: String
+)
+```
+
+
+
+- **ResponseSignIn**
+
+```kotlin
+data class ResponseSignIn(
+    @SerializedName("data")
+    val `data`: Data,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("success")
+    val success: Boolean
+) {
+    data class Data(
+        @SerializedName("email")
+        val email: String,
+        @SerializedName("password")
+        val password: String,
+        @SerializedName("userName")
+        val userName: String
+    )
+}
+```
+
+
+
+- **ResponseSignIn**
+
+```kotlin
+data class ResponseSignUp(
+    @SerializedName("data")
+    val `data`: Data,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("success")
+    val success: Boolean
+) {
+    data class Data(
+        @SerializedName("email")
+        val email: String,
+        @SerializedName("password")
+        val password: String,
+        @SerializedName("userName")
+        val userName: String
+    )
+}
+```
+
+
+
+- **UserService**
+
+```kotlin
+interface UserService {
+    @POST("/users/signin")
+    @Headers("Content-Type: application/json")
+    fun signIn(
+        @Body body: RequestSignIn
+    ): Single<ResponseSignIn>
+
+    @POST("/users/signup")
+    @Headers("Content-Type: application/json")
+    fun signUp(
+        @Body body: RequestSignUp
+    ): Single<ResponseSignUp>
+}
+```
+
+
+
+- **UserViewModel**
+
+: Repository Pattern, MVVM Architecture 이용
+
+```kotlin
+
+```
+
+
+
+- **SignInActivity**
+
+```kotlin
+
+```
 
