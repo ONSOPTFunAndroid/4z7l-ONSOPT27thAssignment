@@ -6,9 +6,9 @@ import com.igluesmik.sopt.ui.base.BaseFragment
 import com.igluesmik.sopt.ui.base.BaseViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProjectFragment : BaseFragment<FragmentProfileBinding, BaseViewModel>() {
+class FriendFragment : BaseFragment<FragmentProfileBinding, BaseViewModel>() {
     override val layoutResourceId: Int
-        get() = R.layout.fragment_project
+        get() = R.layout.fragment_friend
     override val viewModel: BaseViewModel by viewModel()
 
     override fun initStartView() {

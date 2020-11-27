@@ -4,7 +4,10 @@ import androidx.room.Room
 import com.igluesmik.sopt.data.local.datasource.ProfileLocalDataSource
 import com.igluesmik.sopt.data.local.database.ProfileDatabase
 import com.igluesmik.sopt.data.local.datasource.ProfileLocalDataSourceImpl
+import com.igluesmik.sopt.data.remote.api.FriendService
 import com.igluesmik.sopt.data.remote.api.UserService
+import com.igluesmik.sopt.data.remote.datasource.FriendRemoteDataSource
+import com.igluesmik.sopt.data.remote.datasource.FriendRemoteDataSourceImpl
 import com.igluesmik.sopt.data.remote.datasource.UserRemoteDataSource
 import com.igluesmik.sopt.data.remote.datasource.UserRemoteDataSourceImpl
 import com.igluesmik.sopt.data.repository.ProfileRepo
@@ -37,7 +40,15 @@ val networkModule = module {
             .baseUrl("http://15.164.83.210:3000")
             .build()
     }
+    single {
+        Retrofit.Builder()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://reqres.in/")
+            .build()
+    }
     single<UserService> { get<Retrofit>().create(UserService::class.java) }
+    single<FriendService> { get<Retrofit>().create(FriendService::class.java) }
 }
 
 val localDataSourceModule = module {
@@ -46,11 +57,12 @@ val localDataSourceModule = module {
 
 val remoteDataSourceModule = module {
     single<UserRemoteDataSource> { UserRemoteDataSourceImpl(get())}
+    single<FriendRemoteDataSource> { FriendRemoteDataSourceImpl(get())}
 }
 
 val repositoryModule = module {
     single<ProfileRepo> { ProfileRepoImpl(get()) }
-    single<UserRepo> { UserRepoImpl(get()) }
+    single<UserRepo> { UserRepoImpl(get(), get()) }
 }
 
 val viewModelModule = module {
