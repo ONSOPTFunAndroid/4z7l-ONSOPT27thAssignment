@@ -9,8 +9,8 @@ class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : I
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        var dragFlags: Int
-        var swipeFlags: Int
+        val dragFlags: Int
+        val swipeFlags: Int
 
         if (recyclerView.layoutManager is GridLayoutManager) {
             dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or

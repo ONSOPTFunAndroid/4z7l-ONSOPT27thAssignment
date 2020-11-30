@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-        <variable
-            name="activity"
-            type="com.igluesmik.sopt.ui.view.login.SignInActivity" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -91,8 +85,7 @@
             android:background="@drawable/background_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_password"
-            android:onClick="@{(v) -> activity.onSignInButtonClick()}"/>
+            app:layout_constraintTop_toBottomOf="@+id/et_password"/>
 
         <TextView
             android:id="@+id/btn_register"
@@ -102,8 +95,7 @@
             android:textColor="#000"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"
-            android:onClick="@{(v) -> activity.onRegisterButtonClick()}" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

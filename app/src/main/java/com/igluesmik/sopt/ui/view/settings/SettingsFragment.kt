@@ -16,25 +16,25 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, UserViewModel>() 
     override val viewModel by viewModel<UserViewModel>()
 
     override fun initStartView() {
-
+        initClickEvent()
     }
 
     override fun initDataBinding() {
-        viewDataBinding.fragment = this
+
     }
 
     override fun initAfterBinding() {
 
     }
 
-    fun onSignOutButtonClick() {
-        LoginPreference.setAutoLogin(false)
-        startSignInActivity()
-        activity?.finish()
+    private fun initClickEvent(){
+        viewDataBinding.btnLogout.setOnClickListener { onSignOutButtonClick() }
     }
 
-    private fun startSignInActivity() {
-        startActivity(Intent(context, SignInActivity::class.java));
+    private fun onSignOutButtonClick() {
+        LoginPreference.setAutoLogin(false)
+        startActivity(Intent(context, SignInActivity::class.java))
+        requireActivity().finish()
     }
 
 }

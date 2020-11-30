@@ -3,32 +3,33 @@ package com.igluesmik.sopt.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.igluesmik.sopt.data.model.network.request.RequestSignIn
-import com.igluesmik.sopt.data.model.network.request.RequestSignUp
+import com.igluesmik.sopt.data.model.domain.User
 import com.igluesmik.sopt.data.model.network.response.ResponseSignIn
 import com.igluesmik.sopt.data.model.network.response.ResponseSignUp
 import com.igluesmik.sopt.data.repository.UserRepo
 import com.igluesmik.sopt.ui.base.BaseViewModel
+import com.igluesmik.sopt.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
+import java.util.function.Consumer
 
 class UserViewModel(private val repo: UserRepo) : BaseViewModel() {
 
-    private var _signIn = MutableLiveData<ResponseSignIn>()
-    val signIn: LiveData<ResponseSignIn> = _signIn
+    private val _signInTaskEvent = MutableLiveData<Event<Any>>()
+    val signInTaskEvent: LiveData<Event<Any>> = _signInTaskEvent
 
-    private var _signUp = MutableLiveData<ResponseSignUp>()
-    val signUp: LiveData<ResponseSignUp> = _signUp
+    private val _signUpTaskEvent = MutableLiveData<Event<Any>>()
+    val signUpTaskEvent: LiveData<Event<Any>> = _signUpTaskEvent
 
     fun signIn(email: String, password: String) {
         addDisposable(
             repo.signIn(email,password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _signIn.postValue(it)
+                    _signInTaskEvent.postValue(Event(it))
                 }, {
-                    Log.e(TAG, "signIn", it)
+                    _signInTaskEvent.postValue(Event("로그인 실패"))
+                    Log.v(TAG, "signIn", it)
                 })
         )
     }
@@ -36,12 +37,11 @@ class UserViewModel(private val repo: UserRepo) : BaseViewModel() {
     fun signUp(email: String, password: String, userName: String) {
         addDisposable(
             repo.signUp(email, password, userName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _signUp.postValue(it)
+                    _signUpTaskEvent.postValue(Event(it))
                 }, {
-                    Log.e(TAG, "signUp", it)
+                    _signUpTaskEvent.postValue(Event("회원가입 실패"))
+                    Log.v(TAG, "signUp", it)
                 })
         )
     }

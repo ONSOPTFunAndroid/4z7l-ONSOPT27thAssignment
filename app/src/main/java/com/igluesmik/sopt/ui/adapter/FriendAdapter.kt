@@ -1,34 +1,24 @@
 package com.igluesmik.sopt.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.igluesmik.sopt.data.model.entity.Friend
+import com.igluesmik.sopt.data.model.domain.Friend
 import com.igluesmik.sopt.databinding.ItemFriendBinding
-import java.util.zip.Inflater
 
 class FriendAdapter: RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
-    private var _items = mutableListOf<Friend>()
-    var items : List<Friend>
-        get() = _items
+    private var _data = mutableListOf<Friend>()
+    var data : List<Friend> = _data
         set(value) {
-            _items.clear()
-            _items.addAll(value)
+            _data.clear()
+            _data.addAll(value)
             notifyDataSetChanged()
         }
 
     inner class ViewHolder(private val binding: ItemFriendBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Friend) {
-            binding.firstName.text = item.first_name
-            binding.lastName.text = item.last_name
-            Glide.with(binding.root)
-                .load(item.avatar)
-                .into(binding.avatar)
+        fun onBind(item: Friend) {
+            binding.friend = item
         }
     }
 
@@ -39,11 +29,11 @@ class FriendAdapter: RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(_items[position])
+        holder.onBind(_data[position])
     }
 
     override fun getItemCount(): Int {
-        return _items.size
+        return _data.size
     }
 
 }

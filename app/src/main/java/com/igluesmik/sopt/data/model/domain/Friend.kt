@@ -1,4 +1,4 @@
-package com.igluesmik.sopt.data.model.entity
+package com.igluesmik.sopt.data.model.domain
 
 data class Friend(
     val first_name: String,

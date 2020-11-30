@@ -21,7 +21,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         get() = R.layout.fragment_profile
     override val viewModel : ProfileViewModel by viewModel()
 
-    private val profileAdapter : ProfileAdapter by lazy { ProfileAdapter(requireContext()) }
+    private val profileAdapter = ProfileAdapter()
 
     override fun initStartView() {
         initRecyclerView()
@@ -29,7 +29,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun initDataBinding() {
-        viewDataBinding.fragment = this
         initProfileData()
     }
 
@@ -39,8 +38,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private fun observeProfileList() {
         viewModel.profileList.observe(viewLifecycleOwner) {
-            profileAdapter.setData(it)
-            profileAdapter.notifyDataSetChanged()
+            profileAdapter.data = it
         }
     }
 
@@ -66,9 +64,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun initClickListener() {
-        profileAdapter.setOnItemClickListener{
-            startDetailFragment(it)
-        }
+        profileAdapter.setOnItemClickListener{ startDetailFragment(it) }
+        viewDataBinding.btnLinear.setOnClickListener { onLinearLayoutButtonClick() }
+        viewDataBinding.btnGrid.setOnClickListener { onGridLayoutButtonClick() }
     }
 
     private fun startDetailFragment(profile: Profile) {
@@ -76,14 +74,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             .putExtra("id",profile.id))
     }
 
-    fun onLinearLayoutButtonClick() {
+    private fun onLinearLayoutButtonClick() {
         viewDataBinding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = profileAdapter.apply { setLinearItemViewType() }
         }
     }
 
-    fun onGridLayoutButtonClick() {
+    private fun onGridLayoutButtonClick() {
+        profileAdapter.setGridItemViewType()
         viewDataBinding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = profileAdapter.apply { setGridItemViewType() }

@@ -29,8 +29,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_error"
-                bindProfileImage="@{profile.resourceId}"/>
+                android:src="@{profile.resourceId}"
+                tools:src="@drawable/ic_error"/>
 
             <TextView
                 android:id="@+id/txt_title"

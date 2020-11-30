@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="fragment"
-            type="com.igluesmik.sopt.ui.view.settings.SettingsFragment" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +31,6 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="100dp"
             android:background="@drawable/background_button"
-            android:onClick="@{(v)-> fragment.onSignOutButtonClick()}"
             android:text="로그아웃"
             android:textColor="#fff"
             android:textSize="18sp"
@@ -45,7 +38,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,10 +3,13 @@ package com.igluesmik.sopt.ui.view.login
 import android.content.Intent
 import android.widget.Toast
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.data.model.domain.User
 import com.igluesmik.sopt.data.model.network.request.RequestSignUp
 import com.igluesmik.sopt.databinding.ActivitySignUpBinding
 import com.igluesmik.sopt.ui.base.BaseActivity
 import com.igluesmik.sopt.ui.viewmodel.UserViewModel
+import com.igluesmik.sopt.util.EventObserver
+import com.igluesmik.sopt.util.shortToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
@@ -15,11 +18,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
     override val viewModel: UserViewModel by viewModel()
 
     override fun initStartView() {
-
+        initClickEvent()
     }
 
     override fun initBeforeBinding() {
-        viewDataBinding.activity = this
+
     }
 
     override fun initAfterBinding() {
@@ -27,12 +30,20 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
     }
 
     private fun observeSignUpResult() {
-        viewModel.signUp.observe(this, {
-            if(it.success) {
-                Toast.makeText(this,"회원가입 완료!",Toast.LENGTH_SHORT).show()
+        viewModel.signUpTaskEvent.observe(this, EventObserver{
+            if(it is User){
+                shortToast("회원가입 완료!")
                 finishActivityResult()
+            } else if(it is String){
+                shortToast(it)
             }
         })
+    }
+
+    private fun initClickEvent() {
+        viewDataBinding.btnRegister.setOnClickListener {
+            onSignUpButtonClick()
+        }
     }
 
     private fun finishActivityResult() {
@@ -53,7 +64,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
             viewModel.signUp(email, password, name)
         }
         else {
-            Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()
+            shortToast("빈 칸을 채워주세요")
         }
     }
 }

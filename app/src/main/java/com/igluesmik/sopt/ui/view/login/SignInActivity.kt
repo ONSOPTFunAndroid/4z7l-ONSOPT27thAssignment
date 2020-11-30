@@ -3,13 +3,16 @@ package com.igluesmik.sopt.ui.view.login
 import android.content.Intent
 import android.widget.Toast
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.data.model.domain.User
 import com.igluesmik.sopt.data.model.network.request.RequestSignIn
 import com.igluesmik.sopt.databinding.ActivitySignInBinding
 import com.igluesmik.sopt.ui.base.BaseActivity
 import com.igluesmik.sopt.ui.view.MainActivity
 import com.igluesmik.sopt.ui.viewmodel.UserViewModel
+import com.igluesmik.sopt.util.EventObserver
 import com.igluesmik.sopt.util.LoginPreference.isAutoLoginSet
 import com.igluesmik.sopt.util.LoginPreference.setUserPreference
+import com.igluesmik.sopt.util.shortToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
@@ -18,11 +21,11 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
     override val viewModel: UserViewModel by viewModel()
 
     override fun initStartView() {
-
+        initClickEvent()
     }
 
     override fun initBeforeBinding() {
-        viewDataBinding.activity = this
+
     }
 
     override fun initAfterBinding() {
@@ -49,10 +52,19 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
     }
 
     private fun observeSignInResult() {
-        viewModel.signIn.observe(this, {
-            if(it.success) startMainActivity()
-            Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
+        viewModel.signInTaskEvent.observe(this, EventObserver{
+            if(it is User){
+                startMainActivity()
+                shortToast("반갑습니다, ${it.userName}님")
+            } else if(it is String){
+                shortToast(it)
+            }
         })
+    }
+
+    private fun initClickEvent() {
+        viewDataBinding.btnLogin.setOnClickListener { onSignInButtonClick() }
+        viewDataBinding.btnRegister.setOnClickListener { onRegisterButtonClick() }
     }
 
     private fun startMainActivity() {
@@ -60,7 +72,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
         finish()
     }
 
-    fun onSignInButtonClick() {
+    private fun onSignInButtonClick() {
         val email = viewDataBinding.etEmail.text.toString()
         val password = viewDataBinding.etPassword.text.toString()
 
@@ -69,11 +81,11 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
             viewModel.signIn(email,password)
         }
         else {
-            Toast.makeText(this,"빈 칸을 채워주세요",Toast.LENGTH_SHORT).show()
+            shortToast("빈 칸을 채워주세요")
         }
     }
 
-    fun onRegisterButtonClick() {
+    private fun onRegisterButtonClick() {
         startActivityForResult(Intent(this, SignUpActivity::class.java), SIGN_UP_REQUEST_CODE)
     }
 

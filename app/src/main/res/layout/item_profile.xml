@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="profile"
+            type="com.igluesmik.sopt.data.model.entity.Profile" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -15,11 +23,12 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher_foreground"
+            tools:src="@drawable/ic_launcher_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/colorPrimary" />
+            app:tint="@color/colorPrimary"
+            bindImageResource="@{profile.resourceId}" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -36,7 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="Title"
+                android:text="@{profile.title}"
+                tools:text="Title"
                 android:textColor="#030303"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -47,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:maxLines="1"
-                android:text="Subtitle"
+                android:text="@{profile.subtitle}"
+                tools:text="Subtitle"
                 android:textSize="16sp" />
 
         </LinearLayout>

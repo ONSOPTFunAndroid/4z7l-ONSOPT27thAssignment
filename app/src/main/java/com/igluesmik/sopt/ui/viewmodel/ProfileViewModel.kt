@@ -13,12 +13,10 @@ import io.reactivex.schedulers.Schedulers
 class ProfileViewModel(private val repo : ProfileRepo) : BaseViewModel() {
 
     private val _profileList : LiveData<List<Profile>> = repo.getAll()
-    val profileList : LiveData<List<Profile>>
-        get() =  _profileList
+    val profileList : LiveData<List<Profile>> =  _profileList
 
     private val _profileData = MutableLiveData<Profile>()
-    val profileData : LiveData<Profile>
-        get() = _profileData
+    val profileData : LiveData<Profile> = _profileData
 
     fun getProfileById(id : Int){
         addDisposable(repo.getProfileById(id)

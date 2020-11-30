@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="profile"
+            type="com.igluesmik.sopt.data.model.entity.Profile" />
+    </data>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout"
         android:orientation="vertical"
         android:gravity="center"
         android:padding="20dp"
@@ -18,18 +25,20 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher_foreground"
+            tools:src="@drawable/ic_launcher_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/colorPrimary" />
+            app:tint="@color/colorPrimary"
+            bindImageResource="@{profile.resourceId}" />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Title"
+                android:text="@{profile.title}"
+                tools:text="Title"
                 android:textColor="#030303"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -39,7 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Subtitle"
+                android:text="@{profile.subtitle}"
+                tools:text="Subtitle"
                 android:textSize="16sp" />
 
     </LinearLayout>

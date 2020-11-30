@@ -32,10 +32,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, BaseViewModel>() {
         viewPagerAdapter.setFragmentList(listOf(
             FriendFragment(), OtherFragment()
         ))
+
         viewDataBinding.viewPager.adapter = viewPagerAdapter
 
-        viewDataBinding.tabLayout.setupWithViewPager(viewDataBinding.viewPager)
         viewDataBinding.tabLayout.apply {
+            setupWithViewPager(viewDataBinding.viewPager)
             getTabAt(0)?.text = "Friends"
             getTabAt(1)?.text = "Other"
         }
