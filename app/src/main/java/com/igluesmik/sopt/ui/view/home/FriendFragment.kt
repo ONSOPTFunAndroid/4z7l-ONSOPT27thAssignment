@@ -1,26 +1,41 @@
 package com.igluesmik.sopt.ui.view.home
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.igluesmik.sopt.R
+import com.igluesmik.sopt.databinding.FragmentFriendBinding
 import com.igluesmik.sopt.databinding.FragmentProfileBinding
+import com.igluesmik.sopt.ui.adapter.FriendAdapter
 import com.igluesmik.sopt.ui.base.BaseFragment
 import com.igluesmik.sopt.ui.base.BaseViewModel
+import com.igluesmik.sopt.ui.viewmodel.FriendViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FriendFragment : BaseFragment<FragmentProfileBinding, BaseViewModel>() {
+class FriendFragment : BaseFragment<FragmentFriendBinding, FriendViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_friend
-    override val viewModel: BaseViewModel by viewModel()
+    override val viewModel: FriendViewModel by viewModel()
+
+    private val friendAdapter = FriendAdapter()
 
     override fun initStartView() {
-
+        initRecyclerView()
     }
 
     override fun initDataBinding() {
-
+        viewModel.getUsers()
     }
 
     override fun initAfterBinding() {
+        viewModel.friendList.observe(this, {
+            friendAdapter.items = it
+        })
+    }
 
+    private fun initRecyclerView() {
+        viewDataBinding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = friendAdapter
+        }
     }
 
 }

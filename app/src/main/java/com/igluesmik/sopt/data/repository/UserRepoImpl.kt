@@ -32,7 +32,6 @@ class UserRepoImpl(
             .subscribeOn(Schedulers.io())
             .map {
                 val list= mutableListOf<Friend>()
-
                 for(d in it.data){
                     list.add(Friend(d.firstName, d.lastName, d.avatar))
                 }

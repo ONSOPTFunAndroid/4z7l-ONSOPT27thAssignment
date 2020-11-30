@@ -14,6 +14,7 @@ import com.igluesmik.sopt.data.repository.ProfileRepo
 import com.igluesmik.sopt.data.repository.ProfileRepoImpl
 import com.igluesmik.sopt.data.repository.UserRepo
 import com.igluesmik.sopt.data.repository.UserRepoImpl
+import com.igluesmik.sopt.ui.viewmodel.FriendViewModel
 import com.igluesmik.sopt.ui.viewmodel.ProfileViewModel
 import com.igluesmik.sopt.ui.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -33,22 +34,22 @@ val databaseModule = module {
 }
 
 val networkModule = module {
-    single {
+    single<UserService> {
         Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("http://15.164.83.210:3000")
             .build()
+            .create(UserService::class.java)
     }
-    single {
+    single<FriendService> {
         Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://reqres.in/")
             .build()
+            .create(FriendService::class.java)
     }
-    single<UserService> { get<Retrofit>().create(UserService::class.java) }
-    single<FriendService> { get<Retrofit>().create(FriendService::class.java) }
 }
 
 val localDataSourceModule = module {
@@ -68,6 +69,7 @@ val repositoryModule = module {
 val viewModelModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { UserViewModel(get()) }
+    viewModel { FriendViewModel(get()) }
 }
 
 val DiModule = listOf(
