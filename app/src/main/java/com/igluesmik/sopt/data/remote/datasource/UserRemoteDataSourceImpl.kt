@@ -7,7 +7,7 @@ import com.igluesmik.sopt.data.model.network.response.ResponseSignUp
 import com.igluesmik.sopt.data.remote.api.UserService
 import io.reactivex.Single
 
-class UserRemoteDataSourceImpl(private val service: UserService): UserRemoteDataSource {
+class UserRemoteDataSourceImpl(private val service: UserService) : UserRemoteDataSource {
     override fun signIn(email: String, password: String): Single<ResponseSignIn> {
         return service.signIn(RequestSignIn(email, password))
     }

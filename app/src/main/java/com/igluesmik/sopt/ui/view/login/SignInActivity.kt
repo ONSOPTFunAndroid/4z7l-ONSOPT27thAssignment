@@ -12,6 +12,7 @@ import com.igluesmik.sopt.ui.viewmodel.UserViewModel
 import com.igluesmik.sopt.util.EventObserver
 import com.igluesmik.sopt.util.LoginPreference.isAutoLoginSet
 import com.igluesmik.sopt.util.LoginPreference.setUserPreference
+import com.igluesmik.sopt.util.setupToast
 import com.igluesmik.sopt.util.shortToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,6 +23,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
 
     override fun initStartView() {
         initClickEvent()
+        setupToast(this, viewModel.toastMessage)
     }
 
     override fun initBeforeBinding() {
@@ -53,12 +55,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding, UserViewModel>() {
 
     private fun observeSignInResult() {
         viewModel.signInTaskEvent.observe(this, EventObserver{
-            if(it is User){
-                startMainActivity()
-                shortToast("반갑습니다, ${it.userName}님")
-            } else if(it is String){
-                shortToast(it)
-            }
+            startMainActivity()
         })
     }
 

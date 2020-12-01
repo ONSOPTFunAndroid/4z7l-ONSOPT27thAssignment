@@ -16,19 +16,23 @@ import java.util.function.Consumer
 
 class UserViewModel(private val repo: UserRepo) : BaseViewModel() {
 
-    private val _signInTaskEvent = MutableLiveData<Event<Any>>()
-    val signInTaskEvent: LiveData<Event<Any>> = _signInTaskEvent
+    private val _signInTaskEvent = MutableLiveData<Event<User>>()
+    val signInTaskEvent: LiveData<Event<User>> = _signInTaskEvent
 
-    private val _signUpTaskEvent = MutableLiveData<Event<Any>>()
-    val signUpTaskEvent: LiveData<Event<Any>> = _signUpTaskEvent
+    private val _signUpTaskEvent = MutableLiveData<Event<Boolean>>()
+    val signUpTaskEvent: LiveData<Event<Boolean>> = _signUpTaskEvent
+
+    private val _toastMessage = MutableLiveData<Event<String>>()
+    val toastMessage: LiveData<Event<String>> = _toastMessage
 
     fun signIn(email: String, password: String) {
         addDisposable(
             repo.signIn(email,password)
                 .subscribe({
                     _signInTaskEvent.postValue(Event(it))
+                    _toastMessage.postValue(Event("로그인 성공"))
                 }, {
-                    _signInTaskEvent.postValue(Event("로그인 실패"))
+                    _toastMessage.postValue(Event("로그인 실패"))
                     Log.v(TAG, "signIn", it)
                 })
         )
@@ -38,9 +42,10 @@ class UserViewModel(private val repo: UserRepo) : BaseViewModel() {
         addDisposable(
             repo.signUp(email, password, userName)
                 .subscribe({
-                    _signUpTaskEvent.postValue(Event(it))
+                    _signUpTaskEvent.postValue(Event(true))
+                    _toastMessage.postValue(Event("회원가입 성공"))
                 }, {
-                    _signUpTaskEvent.postValue(Event("회원가입 실패"))
+                    _toastMessage.postValue(Event("회원가입 실패"))
                     Log.v(TAG, "signUp", it)
                 })
         )

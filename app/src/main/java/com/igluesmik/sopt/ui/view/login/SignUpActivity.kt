@@ -9,6 +9,7 @@ import com.igluesmik.sopt.databinding.ActivitySignUpBinding
 import com.igluesmik.sopt.ui.base.BaseActivity
 import com.igluesmik.sopt.ui.viewmodel.UserViewModel
 import com.igluesmik.sopt.util.EventObserver
+import com.igluesmik.sopt.util.setupToast
 import com.igluesmik.sopt.util.shortToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,6 +20,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
 
     override fun initStartView() {
         initClickEvent()
+        setupToast(this, viewModel.toastMessage)
     }
 
     override fun initBeforeBinding() {
@@ -30,12 +32,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
     }
 
     private fun observeSignUpResult() {
-        viewModel.signUpTaskEvent.observe(this, EventObserver{
-            if(it is User){
-                shortToast("회원가입 완료!")
+        viewModel.signUpTaskEvent.observe(this, EventObserver{ success ->
+            if(success){
                 finishActivityResult()
-            } else if(it is String){
-                shortToast(it)
             }
         })
     }
@@ -55,7 +54,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, UserViewModel>() {
         finish()
     }
 
-    fun onSignUpButtonClick() {
+    private fun onSignUpButtonClick() {
         val email = viewDataBinding.etEmail.text.toString()
         val name = viewDataBinding.etName.text.toString()
         val password = viewDataBinding.etPassword.text.toString()
